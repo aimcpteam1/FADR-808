@@ -3,4 +3,4 @@ export { ClubEntrance }   from "./ClubEntrance";
 export { HeroJogWheel }   from "./HeroJogWheel";
 export { ScrollTrack }    from "./ScrollTrack";
 export { AudioReactive }  from "./AudioReactive";
-// export { DJConsole }      from "./DJConsole";
+export { MiniDJConsole }  from "./MiniDJConsole";
