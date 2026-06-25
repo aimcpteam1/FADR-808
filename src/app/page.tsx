@@ -5,24 +5,37 @@ import {
   MiniDJConsole,
   AudioReactive,
 } from "@/components/sections";
+import { SectionNav } from "@/components/layout";
 
+/**
+ * Home — the one-page FADR-808 experience.
+ *
+ * Each scene is an independent feature component, sequenced here in narrative
+ * order. Section ids mirror EXPERIENCE_SECTIONS so SectionNav can navigate
+ * between them without coupling to the features themselves.
+ *
+ *   ENTER → DECK → THE SET → CONSOLE → VISUALIZER
+ */
 export default function HomePage() {
   return (
     <>
       {/* ① Club Entrance Journey */}
-      <ClubEntrance />
+      <ClubEntrance id="entrance" />
 
       {/* ② Hero Jog Wheel */}
-      <HeroJogWheel />
+      <HeroJogWheel id="deck" />
 
       {/* ③ One Track, One Scroll */}
-      <ScrollTrack />
+      <ScrollTrack id="set" />
 
       {/* ④ Mini DJ Console Demo */}
-      <MiniDJConsole />
+      <MiniDJConsole id="console" />
 
       {/* ⑤ Audio-Reactive Neon */}
-      <AudioReactive />
+      <AudioReactive id="visualizer" />
+
+      {/* Cross-scene navigation */}
+      <SectionNav />
     </>
   );
 }
