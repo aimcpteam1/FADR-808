@@ -5,12 +5,8 @@ export interface NavItem {
 }
 
 // ─── Audio ───────────────────────────────────────
-export interface AudioState {
-  isPlaying: boolean;
-  volume: number;       // 0–1
-  frequency: number[];  // analyser data
-  bpm: number;
-}
+// Live analysis shapes live with the engine — re-exported for convenience.
+export type { AudioAnalysis, FrequencyBands } from "@/lib/audio";
 
 // ─── Animation ───────────────────────────────────
 export type EasingPreset = "outExpo" | "inExpo" | "inOutExpo";
