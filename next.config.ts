@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // React Three Fiber / Three.js transpilation
+  transpilePackages: ["three"],
+
+  // Empty turbopack config silences the webpack-vs-turbopack warning.
+  // Shader (glsl) raw-loading will be added here when needed.
+  turbopack: {},
 };
 
 export default nextConfig;
