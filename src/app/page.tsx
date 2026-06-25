@@ -1,7 +1,6 @@
-import { HeroJogWheel } from "@/components/sections";
+import { ClubEntrance, HeroJogWheel } from "@/components/sections";
 
 // Sections are imported here as they are built:
-// import { ClubEntrance } from "@/components/sections";
 // import { ScrollTrack }  from "@/components/sections";
 // import { DJConsole }    from "@/components/sections";
 // import { NeonReactive } from "@/components/sections";
@@ -9,7 +8,8 @@ import { HeroJogWheel } from "@/components/sections";
 export default function HomePage() {
   return (
     <>
-      {/* ① Club Entrance Journey  — coming soon */}
+      {/* ① Club Entrance Journey */}
+      <ClubEntrance />
 
       {/* ② Hero Jog Wheel */}
       <HeroJogWheel />
