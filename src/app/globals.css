@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
+/* ─── Theme (Tailwind v4) ───────────────────────────
+   Tailwind v4 does NOT read tailwind.config.ts automatically — the design
+   tokens MUST live here as @theme to generate the brand-* / font-* utilities
+   (bg-brand-bg, text-brand-neon, font-display, …). Values reference the
+   --clr-* / --font-* custom properties below so there's one source of truth. */
+@theme {
+  --color-brand-bg:      var(--clr-bg);
+  --color-brand-surface: var(--clr-surface);
+  --color-brand-neon:    var(--clr-neon);
+  --color-brand-accent:  var(--clr-accent);
+  --color-brand-text:    var(--clr-text);
+  --color-brand-muted:   var(--clr-muted);
+
+  --font-display: var(--font-bebas);
+  --font-mono:    var(--font-jetbrains);
+  --font-body:    var(--font-inter);
+}
+
 /* ─── Custom Properties ─────────────────────────── */
 :root {
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
