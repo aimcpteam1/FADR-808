@@ -2,3 +2,4 @@
 export { Fader }       from "./Fader";
 export { Crossfader }  from "./Crossfader";
 export { Pad }         from "./Pad";
+export { ProductCarousel } from "./ProductCarousel";

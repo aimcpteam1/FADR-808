@@ -1,31 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PRODUCTS, type Product } from "@/lib/products";
 import { asset } from "@/constants";
 import { useGenreMusic } from "@/hooks";
+import { ProductCarousel } from "@/components/ui";
 import type { SectionProps } from "@/types";
 
 const DEFAULT_ID = "P01";
 
+const findById = (id: string) =>
+  PRODUCTS.find((p) => p.id === id) ?? PRODUCTS[0];
+
 /**
- * Build Your Beat — the displayed product is driven by Claude Desktop (MCP).
+ * Build Your Beat — a Cover-Flow product carousel driven by Claude Desktop (MCP).
  *
- * Tell Claude your taste in natural language; the MCP server writes the chosen
- * product id to /selection.json, which this section polls and renders. Only the
- * product image/id changes — layout and styling stay the same.
+ * Claude writes the chosen id to /selection.json, which this section polls; the
+ * carousel then slides that product to center. Dragging/wheeling browses freely;
+ * the centered product drives the label and the genre music.
  */
 export function ProductFinder({ id = "finder", className }: SectionProps) {
-  const [product, setProduct] = useState<Product>(
-    () => PRODUCTS.find((p) => p.id === DEFAULT_ID) ?? PRODUCTS[0]
-  );
+  const [selectedId, setSelectedId] = useState(DEFAULT_ID);
+  const [center, setCenter] = useState<Product>(() => findById(DEFAULT_ID));
+  const [musicGenre, setMusicGenre] = useState<string>();
+  const musicTimer = useRef(0);
 
-  // Auto-play the track matching the current product's genre (no UI).
-  useGenreMusic(product.genre);
+  // Auto-play the centered product's genre (debounced so fast scrubbing
+  // doesn't thrash the audio). No UI.
+  useGenreMusic(musicGenre);
 
+  const handleCenter = (p: Product) => {
+    setCenter(p);
+    window.clearTimeout(musicTimer.current);
+    musicTimer.current = window.setTimeout(() => setMusicGenre(p.genre), 250);
+  };
+
+  // Poll the MCP-written selection.
   useEffect(() => {
     let active = true;
-
     const poll = async () => {
       try {
         const res = await fetch(asset(`/selection.json?t=${Date.now()}`), {
@@ -33,20 +45,20 @@ export function ProductFinder({ id = "finder", className }: SectionProps) {
         });
         if (!res.ok) return;
         const data = (await res.json()) as { productId?: string };
-        const next = PRODUCTS.find((p) => p.id === data.productId);
-        if (active && next && next.id !== product.id) setProduct(next);
+        if (active && data.productId && PRODUCTS.some((p) => p.id === data.productId)) {
+          setSelectedId(data.productId);
+        }
       } catch {
         /* selection.json not reachable yet — keep current */
       }
     };
-
     poll();
     const iv = setInterval(poll, 2000);
     return () => {
       active = false;
       clearInterval(iv);
     };
-  }, [product.id]);
+  }, []);
 
   return (
     <section
@@ -66,19 +78,17 @@ export function ProductFinder({ id = "finder", className }: SectionProps) {
       </p>
 
       <div className="mt-16 flex flex-col items-center">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          key={product.id}
-          src={asset(product.image)}
-          alt={`${product.name} — ${product.color}`}
-          className="w-72 md:w-96 h-auto object-contain drop-shadow-2xl transition-opacity duration-500"
+        <ProductCarousel
+          products={PRODUCTS}
+          selectedId={selectedId}
+          onCenterChange={handleCenter}
         />
         <div className="mt-6 font-mono">
           <span className="text-brand-lime text-3xl md:text-4xl font-bold tracking-widest">
-            {product.id}
+            {center.id}
           </span>
           <p className="mt-2 text-brand-text text-sm tracking-wider">
-            {product.name} · {product.color}
+            {center.name} · {center.color}
           </p>
         </div>
       </div>
