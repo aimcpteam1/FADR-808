@@ -10,26 +10,23 @@ export function Navigation() {
   return (
     <header
       className="fixed top-0 left-0 right-0 z-[var(--z-nav,100)] h-[var(--nav-height)]
-                 flex items-center justify-between px-6 md:px-12
-                 bg-brand-bg/80 backdrop-blur-md border-b border-white/5"
+                 flex items-center justify-between px-6 md:px-12 bg-brand-lime text-black"
     >
       {/* Logo */}
-      <Link href="/" className="font-display text-2xl tracking-widest text-brand-neon">
+      <Link href="/" className="font-mono font-bold text-2xl tracking-widest text-black">
         {BRAND_NAME}
       </Link>
 
       {/* Nav links */}
       <nav aria-label="Main navigation">
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="flex items-center gap-6 md:gap-10">
           {NAV_ITEMS.map(({ label, href }) => (
             <li key={href}>
               <Link
                 href={href}
                 className={[
-                  "font-mono text-sm tracking-wider uppercase transition-colors duration-200",
-                  pathname === href
-                    ? "text-brand-neon"
-                    : "text-brand-muted hover:text-brand-text",
+                  "font-mono text-sm md:text-base tracking-wider uppercase transition-opacity duration-200",
+                  pathname === href ? "opacity-100 underline" : "opacity-70 hover:opacity-100",
                 ].join(" ")}
               >
                 {label}
@@ -38,28 +35,6 @@ export function Navigation() {
           ))}
         </ul>
       </nav>
-
-      {/* CTA */}
-      <Link
-        href="/product"
-        className="hidden md:inline-flex items-center gap-2
-                   font-mono text-xs tracking-widest uppercase
-                   border border-brand-neon text-brand-neon
-                   px-4 py-2 hover:bg-brand-neon hover:text-brand-bg
-                   transition-colors duration-200"
-      >
-        Shop Now
-      </Link>
-
-      {/* Mobile menu placeholder — wired up in a future feature */}
-      <button
-        className="md:hidden text-brand-text"
-        aria-label="Open menu"
-      >
-        <span className="block w-6 h-px bg-current mb-1.5" />
-        <span className="block w-6 h-px bg-current mb-1.5" />
-        <span className="block w-4 h-px bg-current" />
-      </button>
     </header>
   );
 }

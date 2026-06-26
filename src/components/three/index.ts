@@ -1,1 +1,0 @@
-export { BaseScene } from "./BaseScene";

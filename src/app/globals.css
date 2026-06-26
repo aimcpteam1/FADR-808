@@ -12,6 +12,8 @@
   --color-brand-accent:  var(--clr-accent);
   --color-brand-text:    var(--clr-text);
   --color-brand-muted:   var(--clr-muted);
+  --color-brand-lime:    var(--clr-lime);
+  --color-brand-cyan:    var(--clr-cyan);
 
   --font-display: var(--font-bebas);
   --font-mono:    var(--font-jetbrains);
@@ -29,6 +31,8 @@
   --clr-accent:   #ff2d78;
   --clr-text:     #f0f0f0;
   --clr-muted:    #666666;
+  --clr-lime:     #c8f000;
+  --clr-cyan:     #2bb0e8;
 
   --nav-height: 64px;
 
@@ -77,6 +81,15 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--clr-muted);
   border-radius: 2px;
+}
+
+/* ─── Hero logo (outlined neon-lime) ────────────── */
+.hero-logo {
+  color: transparent;
+  -webkit-text-stroke: 3px var(--clr-lime);
+  text-shadow:
+    0 0 18px rgba(200, 240, 0, 0.55),
+    0 0 40px rgba(200, 240, 0, 0.3);
 }
 
 /* ─── Utility ───────────────────────────────────── */

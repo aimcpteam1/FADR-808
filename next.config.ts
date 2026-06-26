@@ -23,9 +23,6 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
 
-  // Three.js needs transpiling for the static build
-  transpilePackages: ["three"],
-
   // Expose basePath to client code so raw asset paths (e.g. audio src) can
   // be prefixed manually — Next does NOT auto-prefix plain string URLs.
   env: {
