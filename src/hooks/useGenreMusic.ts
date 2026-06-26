@@ -79,6 +79,18 @@ export function useGenreMusic(genre: string | undefined) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [genre]);
 
+  // Double-click anywhere stops the music (fade out, then pause).
+  useEffect(() => {
+    const stop = () => {
+      const a = audioRef.current;
+      if (!a || a.paused) return;
+      fadeTo(0, FADE_MS, () => a.pause());
+    };
+    document.addEventListener("dblclick", stop);
+    return () => document.removeEventListener("dblclick", stop);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Unlock playback on the first user gesture.
   useEffect(() => {
     const unlock = () => {
