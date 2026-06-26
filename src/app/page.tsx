@@ -1,13 +1,18 @@
-import { Hero } from "@/components/sections";
+import { Hero, ConnectBanner, BuildYourBeat } from "@/components/sections";
 
 /**
  * Home — landing page.
  *
- * The Hero is the brand's first impression. PRODUCT / EXPERIENCE / ABOUT are
- * reached via the top navigation.
+ *   Hero → Connect banner → Build Your Beat
  *
- *   Hero → Product → Experience → About
+ * PRODUCT / EXPERIENCE / ABOUT are reached via the top navigation.
  */
 export default function HomePage() {
-  return <Hero />;
+  return (
+    <>
+      <Hero />
+      <ConnectBanner />
+      <BuildYourBeat />
+    </>
+  );
 }
