@@ -1,0 +1,218 @@
+[
+  {
+    "id": "P01",
+    "name": "FADR-808 House",
+    "genre": "House",
+    "color": "Blue",
+    "colorHex": "#2980b9",
+    "image": "/products/P01.png"
+  },
+  {
+    "id": "P02",
+    "name": "FADR-808 EDM",
+    "genre": "EDM",
+    "color": "Purple",
+    "colorHex": "#8e44ad",
+    "image": "/products/P02.png"
+  },
+  {
+    "id": "P03",
+    "name": "FADR-808 Techno",
+    "genre": "Techno",
+    "color": "Mono",
+    "colorHex": "#3c3c3c",
+    "image": "/products/P03.png"
+  },
+  {
+    "id": "P04",
+    "name": "FADR-808 Trance",
+    "genre": "Trance",
+    "color": "White",
+    "colorHex": "#e8e8e8",
+    "image": "/products/P04.png"
+  },
+  {
+    "id": "P05",
+    "name": "FADR-808 DnB",
+    "genre": "DnB",
+    "color": "White",
+    "colorHex": "#e8e8e8",
+    "image": "/products/P05.png"
+  },
+  {
+    "id": "P06",
+    "name": "FADR-808 Garage",
+    "genre": "Garage",
+    "color": "Green",
+    "colorHex": "#5f966e",
+    "image": "/products/P06.png"
+  },
+  {
+    "id": "P07",
+    "name": "FADR-808 House",
+    "genre": "House",
+    "color": "Mono",
+    "colorHex": "#3c3c3c",
+    "image": "/products/P07.png"
+  },
+  {
+    "id": "P08",
+    "name": "FADR-808 EDM",
+    "genre": "EDM",
+    "color": "Red",
+    "colorHex": "#c0392b",
+    "image": "/products/P08.png"
+  },
+  {
+    "id": "P09",
+    "name": "FADR-808 Techno",
+    "genre": "Techno",
+    "color": "Green",
+    "colorHex": "#5f966e",
+    "image": "/products/P09.png"
+  },
+  {
+    "id": "P10",
+    "name": "FADR-808 Trance",
+    "genre": "Trance",
+    "color": "White",
+    "colorHex": "#e8e8e8",
+    "image": "/products/P10.png"
+  },
+  {
+    "id": "P11",
+    "name": "FADR-808 DnB",
+    "genre": "DnB",
+    "color": "Orange",
+    "colorHex": "#d6781e",
+    "image": "/products/P11.png"
+  },
+  {
+    "id": "P12",
+    "name": "FADR-808 Garage",
+    "genre": "Garage",
+    "color": "Orange",
+    "colorHex": "#d6781e",
+    "image": "/products/P12.png"
+  },
+  {
+    "id": "P13",
+    "name": "FADR-808 House",
+    "genre": "House",
+    "color": "Yellow",
+    "colorHex": "#e4d31e",
+    "image": "/products/P13.png"
+  },
+  {
+    "id": "P14",
+    "name": "FADR-808 EDM",
+    "genre": "EDM",
+    "color": "White",
+    "colorHex": "#e8e8e8",
+    "image": "/products/P14.png"
+  },
+  {
+    "id": "P15",
+    "name": "FADR-808 Techno",
+    "genre": "Techno",
+    "color": "Yellow",
+    "colorHex": "#e4d31e",
+    "image": "/products/P15.png"
+  },
+  {
+    "id": "P16",
+    "name": "FADR-808 Trance",
+    "genre": "Trance",
+    "color": "Green",
+    "colorHex": "#5f966e",
+    "image": "/products/P16.png"
+  },
+  {
+    "id": "P17",
+    "name": "FADR-808 DnB",
+    "genre": "DnB",
+    "color": "White",
+    "colorHex": "#e8e8e8",
+    "image": "/products/P17.png"
+  },
+  {
+    "id": "P18",
+    "name": "FADR-808 Garage",
+    "genre": "Garage",
+    "color": "White",
+    "colorHex": "#e8e8e8",
+    "image": "/products/P18.png"
+  },
+  {
+    "id": "P19",
+    "name": "FADR-808 House",
+    "genre": "House",
+    "color": "Red",
+    "colorHex": "#c0392b",
+    "image": "/products/P19.png"
+  },
+  {
+    "id": "P20",
+    "name": "FADR-808 EDM",
+    "genre": "EDM",
+    "color": "Pink",
+    "colorHex": "#e85a96",
+    "image": "/products/P20.png"
+  },
+  {
+    "id": "P21",
+    "name": "FADR-808 Techno",
+    "genre": "Techno",
+    "color": "Green",
+    "colorHex": "#5f966e",
+    "image": "/products/P21.png"
+  },
+  {
+    "id": "P22",
+    "name": "FADR-808 Trance",
+    "genre": "Trance",
+    "color": "Green",
+    "colorHex": "#5f966e",
+    "image": "/products/P22.png"
+  },
+  {
+    "id": "P23",
+    "name": "FADR-808 DnB",
+    "genre": "DnB",
+    "color": "White",
+    "colorHex": "#e8e8e8",
+    "image": "/products/P23.png"
+  },
+  {
+    "id": "P24",
+    "name": "FADR-808 Garage",
+    "genre": "Garage",
+    "color": "Mono",
+    "colorHex": "#3c3c3c",
+    "image": "/products/P24.png"
+  },
+  {
+    "id": "P25",
+    "name": "FADR-808 House",
+    "genre": "House",
+    "color": "Orange",
+    "colorHex": "#d6781e",
+    "image": "/products/P25.png"
+  },
+  {
+    "id": "P26",
+    "name": "FADR-808 EDM",
+    "genre": "EDM",
+    "color": "Mono",
+    "colorHex": "#3c3c3c",
+    "image": "/products/P26.png"
+  },
+  {
+    "id": "P27",
+    "name": "FADR-808 Techno",
+    "genre": "Techno",
+    "color": "Blue",
+    "colorHex": "#2980b9",
+    "image": "/products/P27.png"
+  }
+]

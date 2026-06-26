@@ -1,10 +1,10 @@
-import { Hero } from "@/components/sections";
+import { Hero, ProductFinder } from "@/components/sections";
 import { asset } from "@/constants";
 
 /**
  * Home — landing page.
  *
- *   Hero → (below-hero composition image)
+ *   Hero → (below-hero composition image) → Build Your Beat finder
  *
  * PRODUCT / EXPERIENCE / ABOUT are reached via the top navigation.
  */
@@ -18,6 +18,7 @@ export default function HomePage() {
         alt="Plug Into FADR-808 — Build Your Beat"
         className="block w-full h-auto"
       />
+      <ProductFinder />
     </>
   );
 }
