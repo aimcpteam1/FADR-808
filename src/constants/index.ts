@@ -17,10 +17,8 @@ export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 /** Prefix a public-folder path with the deploy base path. */
 export const asset = (path: string) => `${BASE_PATH}${path}`;
 
-// Default audio track. A small royalty-free demo beat ships with the repo so
-// the visualizer plays on the live site. For local testing you can point this
-// at your own file dropped in public/audio/ (e.g. asset("/audio/track.mp3")).
-export const DEFAULT_TRACK = asset("/audio/demo.wav");
+// Default audio track shipped with the repo (plays on the live site).
+export const DEFAULT_TRACK = asset("/audio/track.mp3");
 
 // ─── Home experience composition ─────────────────
 // Single source of truth for the one-page scene order. Each feature stays an
