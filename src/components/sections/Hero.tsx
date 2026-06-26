@@ -53,10 +53,10 @@ export function Hero({ id = "hero", className }: SectionProps) {
       <audio src={DEFAULT_TRACK} loop preload="auto" className="hidden" />
 
       {/* Foreground */}
-      <div className="relative z-10 flex flex-col items-center gap-8 px-6 w-full max-w-4xl">
+      <div className="relative z-10 flex flex-col items-center gap-8 px-6 w-full max-w-5xl">
         {/* Logo + flanking controls */}
         <div className="relative w-full flex items-center justify-center">
-          <h1 className="hero-logo font-mono font-bold leading-[0.9] tracking-tight text-[clamp(4rem,16vw,11rem)]">
+          <h1 className="hero-logo font-mono font-bold leading-[0.85] tracking-tight text-[clamp(4rem,17vw,13rem)]">
             <span className="block">FADR</span>
             <span className="block">-808</span>
           </h1>
@@ -77,18 +77,26 @@ export function Hero({ id = "hero", className }: SectionProps) {
         </div>
 
         {/* Banner */}
-        <div className="w-full max-w-2xl bg-white/15 backdrop-blur-sm py-2">
+        <div className="w-full bg-white/30 backdrop-blur-sm py-2">
           <p className="font-mono font-bold tracking-[0.25em] text-brand-lime text-xl md:text-2xl">
             CONTROL THE VIBE
           </p>
         </div>
 
-        {/* Copy */}
-        <div className="w-full max-w-2xl">
-          <p className="font-mono text-brand-text/90 text-sm md:text-base [text-align:justify] [text-align-last:justify] leading-relaxed">
-            Every movement shapes the atmosphere. Every touch creates energy.
-            Every party begins with someone taking control.
-          </p>
+        {/* Copy — each sentence is its own full-width justified line */}
+        <div className="w-full">
+          {[
+            "Every movement shapes the atmosphere.",
+            "Every touch creates energy.",
+            "Every party begins with someone taking control.",
+          ].map((line) => (
+            <p
+              key={line}
+              className="font-mono text-brand-text/90 text-base md:text-lg leading-relaxed [text-align:justify] [text-align-last:justify]"
+            >
+              {line}
+            </p>
+          ))}
           <div className="mt-4 h-px w-full bg-brand-lime shadow-[0_0_10px_var(--clr-lime)]" />
         </div>
       </div>

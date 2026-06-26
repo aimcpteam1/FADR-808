@@ -10,7 +10,11 @@ export function Navigation() {
   return (
     <header
       className="fixed top-0 left-0 right-0 z-[var(--z-nav,100)] h-[var(--nav-height)]
-                 flex items-center justify-between px-6 md:px-12 bg-brand-lime text-black"
+                 flex items-center justify-between px-6 md:px-12 text-black"
+      style={{
+        backgroundImage:
+          "linear-gradient(to right, #c8f000 0%, #b6d800 38%, #6e7d12 100%)",
+      }}
     >
       {/* Logo */}
       <Link href="/" className="font-mono font-bold text-2xl tracking-widest text-black">
