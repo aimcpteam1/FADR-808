@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { PRODUCTS, type Product } from "@/lib/products";
 import { asset } from "@/constants";
+import { useGenreMusic } from "@/hooks";
 import type { SectionProps } from "@/types";
 
 const DEFAULT_ID = "P01";
@@ -18,6 +19,9 @@ export function ProductFinder({ id = "finder", className }: SectionProps) {
   const [product, setProduct] = useState<Product>(
     () => PRODUCTS.find((p) => p.id === DEFAULT_ID) ?? PRODUCTS[0]
   );
+
+  // Auto-play the track matching the current product's genre (no UI).
+  useGenreMusic(product.genre);
 
   useEffect(() => {
     let active = true;
