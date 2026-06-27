@@ -1,50 +1,96 @@
 # FADR-808 MCP server
 
-Lets **Claude Desktop** recommend a speaker from natural language and push the
-result to the website.
+Recommends a FADR-808 speaker from natural-language taste. Two ways to run it:
 
-## How it works
+| Mode | File | Transport | Use |
+|------|------|-----------|-----|
+| **Public** | `worker.ts` | Streamable HTTP (`POST /mcp`) | Cloudflare Worker — anyone can connect |
+| Local | `server.mjs` | stdio | your own Claude Desktop |
 
+Both expose the same tools:
+
+- `recommend(query)` — parse free-text taste → best id (P01–P27)
+- `select_product(productId)` — pick a specific id
+- `get_products()` — return the catalog
+
+Product data is imported from `../src/data/products.json` (single source of truth).
+
+---
+
+## Deploy to Cloudflare Workers
+
+```bash
+cd mcp
+npm install
+npx wrangler login          # one-time
+npm run deploy              # = wrangler deploy
 ```
-You (Claude Desktop):  "I like House music and orange."
-        │
-        ▼
-  recommend tool  ──reads──▶  src/data/products.json
-        │
-        └──writes──▶  public/selection.json   { "productId": "P25" }
-                              │
-                              ▼
-        Website polls selection.json → swaps the product image
+
+`wrangler deploy` prints your URL, e.g.
+`https://fadr-808-mcp.<your-subdomain>.workers.dev`
+
+Endpoints:
+
+- `POST /mcp` — MCP Streamable HTTP
+- `GET /selection` — currently selected product id (for the website)
+- `OPTIONS *` — CORS preflight (open CORS, `*`)
+
+Smoke-test it:
+
+```bash
+curl -X POST https://fadr-808-mcp.<sub>.workers.dev/mcp \
+  -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call",
+       "params":{"name":"recommend","arguments":{"query":"I like Techno and blue"}}}'
 ```
 
-The recommendation is always a single product id (P01–P27).
+### (Optional) Persist the selection in KV
 
-## Tools
+The tools run fine without it, but to let the **website** react to a
+recommendation, store the choice in KV:
 
-- `recommend(query)` — parse free-text taste, pick the best id, show it.
-- `select_product(productId)` — show a specific id.
-- `get_products()` — return the full catalog so Claude can match itself.
+```bash
+npx wrangler kv namespace create SELECTION   # prints an id
+```
 
-## Setup (Claude Desktop)
+Paste the id into `wrangler.toml`, uncomment the `[[kv_namespaces]]` block,
+then `npm run deploy` again. Now `recommend` / `select_product` write the id and
+`GET /selection` returns it.
 
-Add to `claude_desktop_config.json`
-(macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`):
+---
+
+## Connect an MCP client
+
+**Claude Desktop** (bridges stdio → remote HTTP via `mcp-remote`):
 
 ```json
 {
   "mcpServers": {
     "fadr-808": {
-      "command": "node",
-      "args": ["/Users/gang-gayeon/FADR-808/mcp/server.mjs"]
+      "command": "npx",
+      "args": ["mcp-remote", "https://fadr-808-mcp.<sub>.workers.dev/mcp"]
     }
   }
 }
 ```
 
-Restart Claude Desktop, then run the website locally (`npm run dev`). Ask Claude
-something like *"I like Techno and blue"* — the displayed FADR-808 updates within
-~2s.
+Clients that speak Streamable HTTP natively can use the URL
+`https://fadr-808-mcp.<sub>.workers.dev/mcp` directly.
 
-> Note: the live update needs the site running locally (the MCP server writes a
-> local file). On the static GitHub Pages build it shows the last committed
-> `selection.json`.
+---
+
+## Wire the website to the public selection
+
+The site currently polls same-origin `/selection.json`. To follow the deployed
+Worker instead, point the poll at `https://fadr-808-mcp.<sub>.workers.dev/selection`
+(CORS is already open). Local dev keeps using the stdio server + local file.
+
+---
+
+## Local stdio (unchanged)
+
+```json
+{ "mcpServers": { "fadr-808": {
+  "command": "node",
+  "args": ["/Users/gang-gayeon/FADR-808/mcp/server.mjs"] } } }
+```

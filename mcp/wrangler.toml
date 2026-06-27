@@ -1,0 +1,19 @@
+name = "fadr-808-mcp"
+main = "worker.ts"
+compatibility_date = "2024-11-01"
+
+# ─── Optional: persist the selected product so the website can read it ───
+# The recommend / select_product tools write the chosen id here, and the
+# website polls GET /selection. The MCP tools still work without this, but the
+# live website sync needs it.
+#
+#   1) wrangler kv namespace create SELECTION
+#   2) paste the printed id below
+#   3) uncomment this block and re-deploy
+#
+# [[kv_namespaces]]
+# binding = "SELECTION"
+# id = "PASTE_KV_NAMESPACE_ID_HERE"
+
+[observability]
+enabled = true
