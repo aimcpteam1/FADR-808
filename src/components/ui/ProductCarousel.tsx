@@ -12,7 +12,7 @@ interface ProductCarouselProps {
   onCenterChange?: (product: Product) => void;
 }
 
-const SPACING = 200; // px between neighbours
+const SPACING = 300; // px between neighbours (tighter relative to larger items)
 const EASE = 0.12; // position → target lerp per frame
 
 /**
@@ -61,16 +61,18 @@ export function ProductCarousel({
       const offset = wrap(i - pos);
       const abs = Math.abs(offset);
 
+      // Progressive hierarchy: center [very large] → ±1 [medium] → ±2 [small].
       const tx = Math.sign(offset) * Math.pow(abs, 0.9) * SPACING;
-      const tz = -abs * 140;
-      const ry = Math.max(-55, Math.min(55, -offset * 26));
-      const scale = Math.max(0.5, 1 - abs * 0.16);
-      const opacity = Math.max(0, 1 - abs * 0.26);
+      const tz = -abs * 180;
+      const ry = Math.max(-50, Math.min(50, -offset * 22));
+      const scale = Math.pow(0.6, abs);
+      const opacity = Math.max(0, 1 - abs * 0.34);
 
       el.style.transform = `translate(-50%, -50%) translateX(${tx}px) translateZ(${tz}px) rotateY(${ry}deg) scale(${scale})`;
       el.style.opacity = String(opacity);
       el.style.zIndex = String(1000 - Math.round(abs * 10));
-      el.style.visibility = abs > 5 ? "hidden" : "visible";
+      // Only the centre and two on each side are visible.
+      el.style.visibility = abs > 2.5 ? "hidden" : "visible";
     }
 
     const ci = ((Math.round(pos) % n) + n) % n;
@@ -160,7 +162,7 @@ export function ProductCarousel({
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
-      className="relative w-full h-[340px] md:h-[440px] select-none touch-none cursor-grab active:cursor-grabbing"
+      className="relative w-full h-[480px] md:h-[720px] select-none touch-none cursor-grab active:cursor-grabbing"
       style={{ perspective: "1400px" }}
     >
       <div
@@ -181,7 +183,7 @@ export function ProductCarousel({
               src={asset(p.image)}
               alt={`${p.name} — ${p.color}`}
               draggable={false}
-              className="w-52 md:w-72 h-auto object-contain drop-shadow-2xl pointer-events-none"
+              className="w-[280px] md:w-[460px] h-auto object-contain drop-shadow-2xl pointer-events-none"
             />
           </div>
         ))}
