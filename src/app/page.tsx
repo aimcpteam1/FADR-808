@@ -14,8 +14,8 @@ export default function HomePage() {
       <Hero />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={asset("/images/below-hero.png")}
-        alt="Plug Into FADR-808 — Build Your Beat"
+        src={asset("/images/description.jpg")}
+        alt="FADR-808 — Plug In"
         className="block w-full h-auto"
       />
       <ProductFinder />
