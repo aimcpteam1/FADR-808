@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, JetBrains_Mono, Inter } from "next/font/google";
+import { Bebas_Neue, JetBrains_Mono, Inter, Science_Gothic } from "next/font/google";
 import "./globals.css";
 
 import { Navigation } from "@/components/layout";
@@ -28,6 +28,13 @@ const inter = Inter({
   display: "swap",
 });
 
+const science = Science_Gothic({
+  weight: ["400", "700"],
+  variable: "--font-science",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: {
     default:  `${BRAND_NAME} — ${BRAND_TAGLINE}`,
@@ -44,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${bebas.variable} ${jetbrains.variable} ${inter.variable} dark`}
+      className={`${bebas.variable} ${jetbrains.variable} ${inter.variable} ${science.variable} dark`}
     >
       <body className="bg-brand-bg text-brand-text min-h-screen flex flex-col antialiased">
         <AudioProvider>
