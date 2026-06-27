@@ -84,6 +84,17 @@ export function ProductFinder({ id = "finder", className }: SectionProps) {
           onCenterChange={handleCenter}
         />
       </div>
+
+      <div className="mt-10 flex justify-center">
+        <div className="px-6 py-3" style={{ backgroundColor: "#D9D9D9" }}>
+          <p
+            className="text-black text-sm md:text-base"
+            style={{ fontFamily: "var(--font-science)" }}
+          >
+            e.g. &ldquo;I like House music and orange.&rdquo;
+          </p>
+        </div>
+      </div>
     </section>
   );
 }
