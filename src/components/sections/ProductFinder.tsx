@@ -1,59 +1,66 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { PRODUCTS, type Product } from "@/lib/products";
-import { asset } from "@/constants";
 import { useGenreMusic } from "@/hooks";
-import { ProductCarousel } from "@/components/ui";
+import { ProductCarousel, DemoConsole } from "@/components/ui";
 import type { SectionProps } from "@/types";
 
 const DEFAULT_ID = "P01";
+const findById = (id: string) => PRODUCTS.find((p) => p.id === id) ?? PRODUCTS[0];
+
+// Public MCP server (Cloudflare Worker, Streamable HTTP).
+const MCP_URL = "https://fadr-808-mcp.fadr-808.workers.dev/mcp";
 
 /**
- * Build Your Beat — a Cover-Flow product carousel driven by Claude Desktop (MCP).
- *
- * Claude writes the chosen id to /selection.json, which this section polls; the
- * carousel then slides that product to center. Dragging/wheeling browses freely;
- * the centered product drives the label and the genre music.
+ * Build Your Beat — type your taste, hit Recommend; the deployed MCP picks a
+ * product id and the carousel + demo update to it (image, colour, info, music).
  */
 export function ProductFinder({ id = "finder", className }: SectionProps) {
   const [selectedId, setSelectedId] = useState(DEFAULT_ID);
+  const [centerProduct, setCenterProduct] = useState<Product>(() => findById(DEFAULT_ID));
   const [musicGenre, setMusicGenre] = useState<string>();
+  const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false);
   const musicTimer = useRef(0);
 
-  // Auto-play the centered product's genre (debounced so fast scrubbing
-  // doesn't thrash the audio). No UI.
+  // Auto-play the centered product's genre (debounced). No UI.
   useGenreMusic(musicGenre);
 
   const handleCenter = (p: Product) => {
+    setCenterProduct(p);
     window.clearTimeout(musicTimer.current);
     musicTimer.current = window.setTimeout(() => setMusicGenre(p.genre), 250);
   };
 
-  // Poll the MCP-written selection.
-  useEffect(() => {
-    let active = true;
-    const poll = async () => {
-      try {
-        const res = await fetch(asset(`/selection.json?t=${Date.now()}`), {
-          cache: "no-store",
-        });
-        if (!res.ok) return;
-        const data = (await res.json()) as { productId?: string };
-        if (active && data.productId && PRODUCTS.some((p) => p.id === data.productId)) {
-          setSelectedId(data.productId);
-        }
-      } catch {
-        /* selection.json not reachable yet — keep current */
+  // Call the deployed MCP `recommend` tool and select the returned product.
+  const recommend = async () => {
+    const q = query.trim();
+    if (!q || loading) return;
+    setLoading(true);
+    try {
+      const res = await fetch(MCP_URL, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          id: 1,
+          method: "tools/call",
+          params: { name: "recommend", arguments: { query: q } },
+        }),
+      });
+      const data = await res.json();
+      const text: string = data?.result?.content?.[0]?.text ?? "";
+      const match = text.match(/P\d{2}/);
+      if (match && PRODUCTS.some((p) => p.id === match[0])) {
+        setSelectedId(match[0]); // carousel slides → demo image/colour/info/music update
       }
-    };
-    poll();
-    const iv = setInterval(poll, 2000);
-    return () => {
-      active = false;
-      clearInterval(iv);
-    };
-  }, []);
+    } catch {
+      /* network error — keep current selection */
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section
@@ -94,6 +101,32 @@ export function ProductFinder({ id = "finder", className }: SectionProps) {
             e.g. &ldquo;I like House music and orange.&rdquo;
           </p>
         </div>
+      </div>
+
+      {/* Type a preference → MCP recommend */}
+      <div className="mt-6 flex justify-center gap-3 px-4">
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") recommend();
+          }}
+          placeholder="I like House music and orange"
+          className="w-full max-w-md bg-brand-surface border border-white/15 text-white placeholder-white/40 px-4 py-3 outline-none focus:border-brand-lime"
+          style={{ fontFamily: "var(--font-science)" }}
+        />
+        <button
+          onClick={recommend}
+          disabled={loading}
+          className="border-2 border-brand-lime text-brand-lime px-6 py-3 hover:bg-brand-lime hover:text-black transition-colors disabled:opacity-50"
+          style={{ fontFamily: "var(--font-science)" }}
+        >
+          {loading ? "…" : "Recommend"}
+        </button>
+      </div>
+
+      <div className="mt-12">
+        <DemoConsole product={centerProduct} />
       </div>
     </section>
   );
